@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng ký | Thế giới của bạn</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="shop-name">Thế giới của bạn</div>
+    
+    <!-- Form Đăng ký được bọc trong khung canh giữa màn hình -->
+    <div style="max-width: 400px; margin: 50px auto; background-color: #172554; padding: 40px 30px; border-radius: 12px; border: 1px solid #1e3a8a; text-align: center; box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);">
+        <h2 style="margin-top: 0; margin-bottom: 25px;">ĐĂNG KÝ TÀI KHOẢN</h2>
+        
+        <form onsubmit="event.preventDefault(); register();">
+            <input type="text" id="username" placeholder="Tên đăng nhập" required style="width: 100%; margin-bottom: 15px; box-sizing: border-box;">
+            
+            <input type="password" id="password" placeholder="Mật khẩu" required style="width: 100%; margin-bottom: 25px; box-sizing: border-box;">
+            
+            <button type="submit" style="width: 100%; padding: 12px; font-size: 16px;">Đăng ký</button>
+        </form>
+        
+        <div style="margin-top: 20px;">
+            <a href="login.html">Đã có tài khoản? Đăng nhập tại đây</a>
+        </div>
+        <div style="margin-top: 15px;">
+            <a href="index.html" style="color: #94a3b8; font-size: 14px;">← Quay lại Trang chủ</a>
+        </div>
+    </div>
+
+    <script>
+        function register() {
+            let user = document.getElementById('username').value;
+            let pass = document.getElementById('password').value;
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            if(users.some(u => u.username === user)) {
+                alert('Tài khoản đã tồn tại!');
+            } else {
+                users.push({ username: user, password: pass, role: 'user' });
+                localStorage.setItem('users', JSON.stringify(users));
+                alert('Đăng ký thành công!');
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>

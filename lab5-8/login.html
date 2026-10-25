@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng nhập | Thế giới của bạn</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="shop-name">Thế giới của bạn</div>
+    
+    <!-- Form Đăng nhập được bọc trong khung canh giữa màn hình -->
+    <div style="max-width: 400px; margin: 50px auto; background-color: #172554; padding: 40px 30px; border-radius: 12px; border: 1px solid #1e3a8a; text-align: center; box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);">
+        <h2 style="margin-top: 0; margin-bottom: 25px;">ĐĂNG NHẬP</h2>
+        
+        <form onsubmit="event.preventDefault(); login();">
+            <input type="text" id="username" placeholder="Tên đăng nhập" required style="width: 100%; margin-bottom: 15px; box-sizing: border-box;">
+            
+            <input type="password" id="password" placeholder="Mật khẩu" required style="width: 100%; margin-bottom: 25px; box-sizing: border-box;">
+            
+            <button type="submit" style="width: 100%; padding: 12px; font-size: 16px;">Đăng nhập</button>
+        </form>
+        
+        <div style="margin-top: 20px;">
+            <a href="register.html">Chưa có tài khoản? Đăng ký ngay</a>
+        </div>
+        <div style="margin-top: 15px;">
+            <a href="index.html" style="color: #94a3b8; font-size: 14px;">← Quay lại Trang chủ</a>
+        </div>
+    </div>
+
+    <script>
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        if (!users.some(u => u.role === 'admin')) {
+            users.push({ username: 'admin', password: '123', role: 'admin' });
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+
+        function login() {
+            let user = document.getElementById('username').value;
+            let pass = document.getElementById('password').value;
+            let account = users.find(u => u.username === user && u.password === pass);
+            
+            if(account) {
+                sessionStorage.setItem('currentUser', JSON.stringify(account));
+                if (account.role === 'admin') {
+                    alert('Đăng nhập thành công! Chuyển thẳng vào trang Quản trị.');
+                    window.location.href = 'admin/products/index.html'; 
+                } else {
+                    alert('Đăng nhập thành công!');
+                    window.location.href = 'index.html'; 
+                }
+            } else {
+                alert('Sai tài khoản hoặc mật khẩu!');
+            }
+        }
+    </script>
+</body>
+</html>

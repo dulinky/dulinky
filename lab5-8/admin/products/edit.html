@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa Sản phẩm | Thế giới của bạn</title>
+    <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+    <div class="shop-name">Thế giới của bạn - ADMIN</div>
+    
+    <div style="max-width: 600px; margin: 30px auto; background-color: #172554; padding: 30px; border-radius: 12px; border: 1px solid #1e3a8a; box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);">
+        <h2 style="margin-top: 0; text-align: center;">SỬA SẢN PHẨM</h2>
+        
+        <label>Tên sản phẩm:</label>
+        <input type="text" id="name" required style="width: 100%; box-sizing: border-box; margin-top: 5px; margin-bottom: 15px;">
+        
+        <label>Giá (VNĐ):</label>
+        <input type="number" id="price" required style="width: 100%; box-sizing: border-box; margin-top: 5px; margin-bottom: 15px;">
+        
+        <label>URL Hình ảnh hoặc đường dẫn:</label>
+        <input type="text" id="image" required style="width: 100%; box-sizing: border-box; margin-top: 5px; margin-bottom: 15px;">
+        
+        <label>Mã Danh mục (ID):</label>
+        <input type="text" id="categoryId" required style="width: 100%; box-sizing: border-box; margin-top: 5px; margin-bottom: 15px;">
+        
+        <label>Mô tả chi tiết:</label>
+        <textarea id="description" rows="5" style="width: 100%; box-sizing: border-box; margin-top: 5px; margin-bottom: 20px;"></textarea>
+        
+        <div style="display: flex; gap: 10px;">
+            <button onclick="update()" style="flex: 1;">Cập nhật</button>
+            <a href="index.html" style="flex: 1;"><button style="width: 100%; background: #475569; border-color: #64748b;">Hủy bỏ</button></a>
+        </div>
+    </div>
+
+    <script>
+        const id = new URLSearchParams(window.location.search).get('id');
+        
+        fetch(`http://localhost:3000/products/${id}`)
+            .then(res => res.json())
+            .then(p => {
+                document.getElementById('name').value = p.name;
+                document.getElementById('price').value = p.price;
+                document.getElementById('image').value = p.image;
+                document.getElementById('categoryId').value = p.categoryId;
+                document.getElementById('description').value = p.description || '';
+            });
+
+        function update() {
+            let data = {
+                name: document.getElementById('name').value,
+                price: Number(document.getElementById('price').value),
+                image: document.getElementById('image').value,
+                categoryId: document.getElementById('categoryId').value,
+                description: document.getElementById('description').value
+            };
+
+            fetch(`http://localhost:3000/products/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).then(res => { 
+                if(res.ok) { alert('Cập nhật sản phẩm thành công!'); window.location.href = 'index.html'; } 
+            });
+        }
+    </script>
+</body>
+</html>

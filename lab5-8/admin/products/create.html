@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm Sản phẩm | Thế giới của bạn</title>
+    <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+    <div class="shop-name">Thế giới của bạn - ADMIN</div>
+    
+    <div style="max-width: 600px; margin: 30px auto; background-color: #172554; padding: 30px; border-radius: 12px; border: 1px solid #1e3a8a; box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);">
+        <h2 style="margin-top: 0; text-align: center;">THÊM SẢN PHẨM MỚI</h2>
+        
+        <label>Tên sản phẩm:</label>
+        <input type="text" id="name" placeholder="Tên sản phẩm..." required style="width: 100%; box-sizing: border-box; margin-top: 5px; margin-bottom: 15px;">
+        
+        <label>Giá (VNĐ):</label>
+        <input type="number" id="price" placeholder="Ví dụ: 15000000" required style="width: 100%; box-sizing: border-box; margin-top: 5px; margin-bottom: 15px;">
+        
+        <label>URL Hình ảnh hoặc đường dẫn:</label>
+        <input type="text" id="image" placeholder="Ví dụ: pictures/sanpham1.jpg" required style="width: 100%; box-sizing: border-box; margin-top: 5px; margin-bottom: 15px;">
+        
+        <label>Mã Danh mục (ID):</label>
+        <input type="text" id="categoryId" placeholder="Ví dụ: 1" required style="width: 100%; box-sizing: border-box; margin-top: 5px; margin-bottom: 15px;">
+        
+        <label>Mô tả chi tiết:</label>
+        <textarea id="description" rows="5" placeholder="Nhập mô tả sản phẩm..." style="width: 100%; box-sizing: border-box; margin-top: 5px; margin-bottom: 20px;"></textarea>
+        
+        <div style="display: flex; gap: 10px;">
+            <button onclick="create()" style="flex: 1;">Lưu Sản phẩm</button>
+            <a href="index.html" style="flex: 1;"><button style="width: 100%; background: #475569; border-color: #64748b;">Hủy bỏ</button></a>
+        </div>
+    </div>
+
+    <script>
+        function create() {
+            let data = {
+                name: document.getElementById('name').value,
+                price: Number(document.getElementById('price').value),
+                image: document.getElementById('image').value,
+                categoryId: document.getElementById('categoryId').value,
+                description: document.getElementById('description').value
+            };
+
+            if(!data.name || !data.price || !data.image || !data.categoryId) {
+                return alert('Vui lòng nhập đủ các thông tin bắt buộc!');
+            }
+            
+            fetch('http://localhost:3000/products', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).then(res => { 
+                if(res.ok) { alert('Thêm sản phẩm thành công'); window.location.href = 'index.html'; } 
+            });
+        }
+    </script>
+</body>
+</html>

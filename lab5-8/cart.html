@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Giỏ hàng | Thế giới của bạn</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="shop-name">Thế giới của bạn</div>
+    <a href="index.html">← Tiếp tục mua hàng</a>
+    <hr>
+    
+    <h2>Giỏ hàng của bạn</h2>
+    <table>
+        <thead><tr><th>Sản phẩm</th><th>Giá</th><th>Số lượng</th><th>Thành tiền</th><th>Hành động</th></tr></thead>
+        <tbody id="cart-body"></tbody>
+    </table>
+    
+    <h3 id="total" style="color: #facc15; text-align: right; font-size: 24px;"></h3>
+    <div style="text-align: right;">
+        <button onclick="checkout()">Thanh toán ngay</button>
+    </div>
+
+    <script>
+        function renderCart() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let html = '';
+            let total = 0;
+            cart.forEach((item, index) => {
+                let rowTotal = item.price * item.quantity;
+                total += rowTotal;
+                html += `
+                    <tr>
+                        <td><b style="color:#fff">${item.name}</b></td>
+                        <td style="color:#facc15">${item.price.toLocaleString()}</td>
+                        <td>${item.quantity}</td>
+                        <td style="color:#facc15">${rowTotal.toLocaleString()}</td>
+                        <td><button onclick="removeItem(${index})" style="background: red; border:none;">Xóa</button></td>
+                    </tr>`;
+            });
+            document.getElementById('cart-body').innerHTML = html;
+            document.getElementById('total').innerText = `Tổng cộng: ${total.toLocaleString()} VNĐ`;
+        }
+        function removeItem(index) {
+            let cart = JSON.parse(localStorage.getItem('cart'));
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+        }
+        function checkout() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart.length === 0) return alert('Giỏ hàng đang trống!');
+            alert('Thanh toán thành công! Cảm ơn bạn đã ủng hộ Thế giới của bạn.');
+            localStorage.removeItem('cart');
+            window.location.href = 'index.html';
+        }
+        renderCart();
+    </script>
+</body>
+</html>

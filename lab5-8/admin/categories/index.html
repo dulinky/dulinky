@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý Danh mục | Thế giới của bạn</title>
+    <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+    <div class="shop-name">Thế giới của bạn - ADMIN</div>
+    
+    <div style="margin-bottom: 20px;">
+        <a href="../../index.html">← Về Trang chủ</a> | 
+        <a href="../products/index.html">Quản lý Sản phẩm</a>
+    </div>
+    <hr>
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+        <h2>Danh sách Danh mục</h2>
+        <a href="create.html"><button>+ Thêm danh mục mới</button></a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên danh mục</th>
+                <th style="width: 150px; text-align: center;">Hành động</th>
+            </tr>
+        </thead>
+        <tbody id="list"></tbody>
+    </table>
+
+    <script>
+        function loadData() {
+            fetch('http://localhost:3000/posts')
+                .then(res => res.json())
+                .then(data => {
+                    let html = data.map(c => `
+                        <tr>
+                            <td>${c.id}</td>
+                            <td><b style="color: #fff;">${c.name}</b></td>
+                            <td style="text-align: center;">
+                                <a href="edit.html?id=${c.id}" style="margin-right: 10px;">Sửa</a>
+                                <button onclick="remove('${c.id}')" style="background: red; border: none; padding: 5px 10px;">Xóa</button>
+                            </td>
+                        </tr>
+                    `).join('');
+                    document.getElementById('list').innerHTML = html;
+                });
+        }
+
+        function remove(id) {
+            if(confirm('Bạn có chắc chắn muốn xóa danh mục này?')) {
+                fetch(`http://localhost:3000/posts/${id}`, { method: 'DELETE' })
+                    .then(res => { if(res.ok) { alert('Xóa thành công'); loadData(); } });
+            }
+        }
+        loadData();
+    </script>
+</body>
+</html>

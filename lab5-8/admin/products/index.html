@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý Sản phẩm | Thế giới của bạn</title>
+    <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+    <div class="shop-name">Thế giới của bạn - ADMIN</div>
+    
+    <div style="margin-bottom: 20px;">
+        <a href="../../index.html">← Về Trang chủ</a> | 
+        <a href="../categories/index.html">Quản lý Danh mục</a>
+    </div>
+    <hr>
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+        <h2>Danh sách Sản phẩm</h2>
+        <a href="create.html"><button>+ Thêm sản phẩm mới</button></a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 80px; text-align: center;">Hình ảnh</th>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th>Mã Danh mục</th>
+                <th style="width: 150px; text-align: center;">Hành động</th>
+            </tr>
+        </thead>
+        <tbody id="list"></tbody>
+    </table>
+
+    <script>
+        function loadData() {
+            fetch('http://localhost:3000/products')
+                .then(res => res.json())
+                .then(data => {
+                    let html = data.map(p => `
+                        <tr>
+                            <td style="text-align: center;">
+                                <img src="../../${p.image}" onerror="this.src='${p.image}'" width="60" style="border-radius: 4px; background: white; padding: 2px;">
+                            </td>
+                            <td><b style="color: #fff;">${p.name}</b></td>
+                            <td style="color: #facc15;">${p.price.toLocaleString()} VNĐ</td>
+                            <td>${p.categoryId}</td>
+                            <td style="text-align: center;">
+                                <a href="edit.html?id=${p.id}" style="margin-right: 10px;">Sửa</a>
+                                <button onclick="remove('${p.id}')" style="background: red; border: none; padding: 5px 10px;">Xóa</button>
+                            </td>
+                        </tr>
+                    `).join('');
+                    document.getElementById('list').innerHTML = html;
+                });
+        }
+
+        function remove(id) {
+            if(confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
+                fetch(`http://localhost:3000/products/${id}`, { method: 'DELETE' })
+                    .then(res => { if(res.ok) { alert('Xóa thành công'); loadData(); } });
+            }
+        }
+        loadData();
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa Danh mục | Thế giới của bạn</title>
+    <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+    <div class="shop-name">Thế giới của bạn - ADMIN</div>
+    
+    <div style="max-width: 500px; margin: 40px auto; background-color: #172554; padding: 30px; border-radius: 12px; border: 1px solid #1e3a8a; box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);">
+        <h2 style="margin-top: 0; text-align: center;">SỬA DANH MỤC</h2>
+        
+        <label>Tên danh mục:</label>
+        <input type="text" id="name" required style="width: 100%; box-sizing: border-box; margin-top: 5px; margin-bottom: 20px;">
+        
+        <div style="display: flex; gap: 10px;">
+            <button onclick="update()" style="flex: 1;">Cập nhật</button>
+            <a href="index.html" style="flex: 1;"><button style="width: 100%; background: #475569; border-color: #64748b;">Hủy bỏ</button></a>
+        </div>
+    </div>
+
+    <script>
+        const id = new URLSearchParams(window.location.search).get('id');
+        
+        fetch(`http://localhost:3000/posts/${id}`)
+            .then(res => res.json())
+            .then(data => document.getElementById('name').value = data.name);
+
+        function update() {
+            let name = document.getElementById('name').value;
+            if(!name) return alert('Vui lòng không để trống!');
+
+            fetch(`http://localhost:3000/posts/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name })
+            }).then(res => { 
+                if(res.ok) { alert('Cập nhật thành công'); window.location.href = 'index.html'; } 
+            });
+        }
+    </script>
+</body>
+</html>

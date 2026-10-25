@@ -1,0 +1,87 @@
+ {
+  "users": [
+    {
+      "username": "admin",
+      "password": "123",
+      "role": "admin",
+      "id": "yiONj5LKeiE"
+    }
+  ],
+  "posts": [
+    {
+      "id": "1",
+      "name": "Điện thoại"
+    },
+    {
+      "id": "2",
+      "name": "Laptop"
+    },
+    {
+      "id": "3",
+      "name": "Phụ kiện"
+    }
+  ],
+  "products": [
+    {
+      "name": "iPhone 15 Pro Max 256GB",
+      "price": 29990000,
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGutsBRdw4vmMq3022PbViHtVo8ATLD7Shx4LkMC48PQ&s=10",
+      "categoryId": "1",
+      "description": "Khung viền Titanium cao cấp, chip Apple A17 Pro mạnh mẽ, camera 48MP hỗ trợ zoom quang học 5x sắc nét.",
+      "id": "1"
+    },
+    {
+      "name": "Samsung Galaxy S24 Ultra",
+      "price": 31990000,
+      "image": "data:image/webp;base64,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",
+      "categoryId": "1",
+      "description": "Có gì đâu",
+      "id": "2"
+    },
+    {
+      "name": "MacBook Pro 14 inch M3",
+      "price": 39990000,
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3PswBS_rb6FjYGPoAiBISm9nNkxAwotte66UqmJg2bg&s=10",
+      "categoryId": "2",
+      "id": "3"
+    },
+    {
+      "name": "ASUS TUF Gaming F15",
+      "price": 21990000,
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpmDNfwsp-L9Mqels9zWk-uVtMSOs7gOYcZQBmTMAx7g&s=10",
+      "categoryId": "2",
+      "id": "4"
+    },
+    {
+      "name": "Tai nghe AirPods Pro Gen 2",
+      "price": 5990000,
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwhkB0sLN_-2H8y5rWrqzBFYwikQ0HqsLOhffZdE15xA&s=10",
+      "categoryId": "3",
+      "id": "5"
+    },
+    {
+      "name": "Chuột Logitech G102",
+      "price": 390000,
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6YcWem1oe0BuOrRbdjIAKz1P0mxsrv1vOp2nEwl5X8g&s=10",
+      "categoryId": "3",
+      "id": "6"
+    },
+    {
+      "name": "Honor Magic 7pro",
+      "price": 2000000,
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvnkc8xJHvXQCAWnog5J1x5Zep02zS1bfmbINwIUF0Cg&s=10",
+      "categoryId": "1",
+      "description": "1,07 tỷ màu, Màn hình chăm sóc mắt cận thị AI, tần số 4320Hz PWM giảm nháy sáng, Điều chỉnh độ sáng động, Màn hình đêm theo nhịp sinh học, Màn hình tông màu tự nhiên",
+      "id": "v-P6ExGcOPc"
+    },
+    {
+      "name": "hihi",
+      "price": 20,
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQvt-fmQGTp6qmng-bIxp7beimgwEOnkI7Q_u7c1NKDg&s=10",
+      "categoryId": "3",
+      "description": "test",
+      "id": "YJDnf1TJSpw"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
