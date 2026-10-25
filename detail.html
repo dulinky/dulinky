@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết sản phẩm | Thế giới của bạn</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="shop-name">Thế giới của bạn</div>
+    <a href="index.html">← Về trang chủ</a>
+    <hr>
+    
+    <div id="product-detail" style="margin-top: 20px;"></div>
+    
+    <script>
+        const id = new URLSearchParams(window.location.search).get('id');
+        const user = JSON.parse(sessionStorage.getItem('currentUser'));
+        
+        fetch(`http://localhost:3000/products/${id}`)
+            .then(res => res.json())
+            .then(p => {
+                fetch(`http://localhost:3000/posts/${p.categoryId}`)
+                    .then(res => res.json())
+                    .then(category => renderDetail(p, category.name))
+                    .catch(() => renderDetail(p, "Không xác định"));
+            });
+
+        function renderDetail(p, categoryName) {
+            document.getElementById('product-detail').innerHTML = `
+                <div style="display: flex; gap: 40px; background-color: #172554; padding: 30px; border-radius: 12px; border: 1px solid #1e3a8a;">
+                    <div style="flex: 1; text-align: center;">
+                        <img src="${p.image}" alt="${p.name}" style="max-width: 100%; border-radius: 8px; background: white; padding: 10px;">
+                    </div>
+                    <div style="flex: 2;">
+                        <h1 style="margin-top: 0; font-size: 35px; color: #00f0ff;">${p.name}</h1>
+                        <p style="color: #94a3b8; font-size: 16px;">Danh mục: <b style="color: white;">${categoryName}</b></p>
+                        <h2 style="color: #facc15; font-size: 32px;">${Number(p.price).toLocaleString()} VNĐ</h2>
+                        <h3>Mô tả sản phẩm:</h3>
+                        <p style="line-height: 1.8; font-size: 16px; color: #cbd5e1;">${p.description || 'Chưa có thông tin mô tả.'}</p>
+                        <br>
+                        <button onclick="addToCart('${p.id}', '${p.name}', ${p.price})" style="padding: 15px 30px; font-size: 18px;">🛒 THÊM VÀO GIỎ HÀNG</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function addToCart(id, name, price) {
+            if (!user || user.role === 'admin') return alert('Vui lòng đăng nhập Khách hàng!');
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let item = cart.find(c => c.id === id);
+            if (item) item.quantity += 1;
+            else cart.push({ id, name, price, quantity: 1 });
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert('Đã thêm vào giỏ hàng!');
+        }
+    </script>
+</body>
+</html>
